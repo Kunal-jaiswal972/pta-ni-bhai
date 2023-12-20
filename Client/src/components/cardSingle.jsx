@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  CircularProgress,
   Card,
   CardActions,
   CardContent,
@@ -8,31 +9,16 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { splitArrayAtSpace, d, a } from "../lib/something";
+import { splitArrayAtSpace, tokenizeAndMapToSigns } from "../lib/something";
 import TypingEffect from "./typingEffect";
 
-const Test = () => {
-  const title = "Cities can but lack will to be disability-friendly";
-  const article =
-    "The Accessible India campaign in Gujarat's cities has remained a mixed bag in terms of making physical and digital spaces accessible to people with disabilities";
-
+const CardSingle = ({ newsItem }) => {
   const [currentArrayIndex, setCurrentArrayIndex] = useState(0);
   const [typingStarted, setTypingStarted] = useState(false);
   const [typingStarted2, setTypingStarted2] = useState(false);
   const [imgArr, setImgArr] = useState([]);
+
   console.log(imgArr);
-
-  const handleTitleClick = () => {
-    setImgArr(splitArrayAtSpace(d));
-    setTypingStarted(!typingStarted);
-    setTypingStarted2(false);
-  };
-
-  const handleArticleClick = () => {
-    setImgArr(splitArrayAtSpace(a));
-    setTypingStarted2(!typingStarted2);
-    setTypingStarted(false);
-  };
 
   useEffect(() => {
     if (typingStarted) {
@@ -54,23 +40,49 @@ const Test = () => {
     }
   }, [typingStarted2]);
 
+  const handleTitleClick = async (text) => {
+    try {
+      setImgArr(tokenizeAndMapToSigns(text));
+      setTypingStarted(!typingStarted);
+      setTypingStarted2(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleArticleClick = async (text) => {
+    try {
+      setImgArr(tokenizeAndMapToSigns(text));
+      setTypingStarted2(!typingStarted2);
+      setTypingStarted(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <Card sx={{ marginBottom: "2em", marginTop: "1em" }}>
+    <Card sx={{ marginBottom: "2em" }}>
       <CardMedia
         sx={{ height: 200 }}
-        image="https://static.toiimg.com/thumb/imgsize-123456,msid-105689785,width-300,resizemode-4/105689785.jpg"
+        image={
+          newsItem.img === "https://static.toiimg.com/photo/25581306.cms"
+            ? "../assets/default.svg"
+            : newsItem.img
+        }
+        title={newsItem.title}
       />
       <CardContent>
         <Box
           component="div"
           sx={{
             display: "flex",
+            flexWrap: "wrap",
             gap: "4px",
             cursor: "pointer",
           }}
-          onClick={handleTitleClick}
+          onClick={() => handleTitleClick(newsItem.title)}
         >
-          {title.split(" ").map((word, idx) => (
+          {newsItem.title.split(" ").map((word, idx) => (
             <Typography
               variant="h6"
               component="span"
@@ -93,23 +105,24 @@ const Test = () => {
             gap: "3px",
             cursor: "pointer",
           }}
-          onClick={handleArticleClick}
+          onClick={() => handleArticleClick(newsItem.article)}
         >
-          {article.split(" ").map((word, idx) => (
-            <Typography
-              variant="body2"
-              component="span"
-              key={idx}
-              style={{
-                backgroundColor:
-                  typingStarted2 && idx === currentArrayIndex
-                    ? "yellowgreen"
-                    : "",
-              }}
-            >
-              {word}
-            </Typography>
-          ))}
+          {newsItem.article &&
+            newsItem.article.split(" ").map((word, idx) => (
+              <Typography
+                variant="body2"
+                component="span"
+                key={idx}
+                style={{
+                  backgroundColor:
+                    typingStarted2 && idx === currentArrayIndex
+                      ? "yellowgreen"
+                      : "",
+                }}
+              >
+                {word}
+              </Typography>
+            ))}
         </Box>
       </CardContent>
       <CardActions
@@ -131,10 +144,17 @@ const Test = () => {
             setCurrentArrayIndex={setCurrentArrayIndex}
           />
         )}
-        <Button size="small">Read More</Button>
+        <Button
+          size="small"
+          href={newsItem.link}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Read More
+        </Button>
       </CardActions>
     </Card>
   );
 };
 
-export default Test;
+export default CardSingle;

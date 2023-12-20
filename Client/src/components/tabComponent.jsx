@@ -5,7 +5,10 @@ import NewsCard from "./newsCard";
 
 const TabComponent = () => {
   const [value, setValue] = React.useState("General");
-  const tabsCategories = useMemo(() => ["General", "Education", "Schemes"], []);
+  const tabsCategories = useMemo(
+    () => ["General", "Education", "Schemes", "Articles"],
+    []
+  );
 
   const handleChange = (_, newValue) => {
     setValue(newValue);

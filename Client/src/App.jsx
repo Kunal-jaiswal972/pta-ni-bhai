@@ -10,8 +10,8 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <Container component="main" maxWidth="xs">
-        <Test/>
+      <Container component="main" maxWidth="sm">
+        {/* <Test/> */}
         <TabComponent />
       </Container>
     </QueryClientProvider>

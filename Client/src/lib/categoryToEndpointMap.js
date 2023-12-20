@@ -1,6 +1,7 @@
 export const endpoint = {
-  General: "general",
-  Education: "education",
-  Schemes: "benefits",
+  General: "/news/general",
+  Education: "/news/education",
+  Schemes: "/news/benefits",
+  Articles: "/test"
 };
 

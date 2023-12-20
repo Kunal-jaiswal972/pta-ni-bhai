@@ -208,6 +208,35 @@ export const a = [
   "https://lingojam.com/img/ASL_signs/s.png",
 ];
 
+export const signs = {
+  a: "https://lingojam.com/img/ASL_signs/a.png",
+  b: "https://lingojam.com/img/ASL_signs/b.png",
+  c: "https://lingojam.com/img/ASL_signs/c.png",
+  d: "https://lingojam.com/img/ASL_signs/d.png",
+  e: "https://lingojam.com/img/ASL_signs/e.png",
+  f: "https://lingojam.com/img/ASL_signs/f.png",
+  g: "https://lingojam.com/img/ASL_signs/g.png",
+  h: "https://lingojam.com/img/ASL_signs/h.png",
+  i: "https://lingojam.com/img/ASL_signs/i.png",
+  j: "https://lingojam.com/img/ASL_signs/j.png",
+  k: "https://lingojam.com/img/ASL_signs/k.png",
+  l: "https://lingojam.com/img/ASL_signs/l.png",
+  m: "https://lingojam.com/img/ASL_signs/m.png",
+  n: "https://lingojam.com/img/ASL_signs/n.png",
+  o: "https://lingojam.com/img/ASL_signs/o.png",
+  p: "https://lingojam.com/img/ASL_signs/p.png",
+  q: "https://lingojam.com/img/ASL_signs/q.png",
+  r: "https://lingojam.com/img/ASL_signs/r.png",
+  s: "https://lingojam.com/img/ASL_signs/s.png",
+  t: "https://lingojam.com/img/ASL_signs/t.png",
+  u: "https://lingojam.com/img/ASL_signs/u.png",
+  v: "https://lingojam.com/img/ASL_signs/v.png",
+  w: "https://lingojam.com/img/ASL_signs/w.png",
+  x: "https://lingojam.com/img/ASL_signs/x.png",
+  y: "https://lingojam.com/img/ASL_signs/y.png",
+  z: "https://lingojam.com/img/ASL_signs/z.png",
+};
+
 const spaceImageUrl = "https://lingojam.com/img/ASL_signs/_space.png";
 
 // Function to split the array at space URLs
@@ -233,4 +262,14 @@ export const splitArrayAtSpace = (array) => {
     result.push(currentSubarray);
   }
   return result;
+};
+
+export const tokenizeAndMapToSigns = (text) => {
+  const words = text.split(/\s+/).map((word) => word.replace(/[^a-zA-Z]/g, ""));
+
+  const resultArray = words.map((word) => {
+    return word.split("").map((char) => signs[char.toLowerCase()]);
+  });
+
+  return resultArray;
 };

@@ -13,7 +13,6 @@ const TypingEffect = ({
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (currentImageIndex === imageArrays[currentArrayIndex].length) {
-        // Move to the next array when all images in the current array are displayed
         setCurrentArrayIndex(
           (prevIndex) => (prevIndex + 1) % imageArrays.length
         );
