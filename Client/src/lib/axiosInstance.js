@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: "https://disability-news-scraper.onrender.com/api/v1",
+  baseURL: import.meta.env.VITE_BACKEND_URL + "/api/v1",
 });
 
